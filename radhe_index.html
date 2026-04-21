@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalaryPaisa - Instant Salary Loans</title>
+    <meta name="description" content="Get instant salary-based loans with fast approval. Apply now at SalaryPaisa.in">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 5% 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Calculator */
+        .calculator-section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .calculator-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .calc-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .result-card.total {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        /* Apply Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* About */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .calculator-container {
+                padding: 2rem 1rem;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 40px 5%;
+            }
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">SalaryPaisa</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#apply">Apply Loan</a></li>
+                <li><a href="#customers">Customers</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Instant Salary Loans</h1>
+        <p>Get quick approval on your salary-based loan application within minutes</p>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="calculator-container">
+            <h2 class="calc-title">Loan Calculator</h2>
+            <div class="calc-grid">
+                <div class="input-group">
+                    <label>Loan Amount (₹)</label>
+                    <input type="number" id="loanAmount" value="50000" min="1000" max="500000">
+                </div>
+                <div class="input-group">
+                    <label>Processing Fee (5%)</label>
+                    <input type="number" id="processingFee" value="2500" readonly>
+                </div>
+                <div class="input-group">
+                    <label>GST on PF (18%)</label>
+                    <input type="number" id="gstAmount" value="450" readonly>
+                </div>
+                <div class="input-group">
+                    <label>Per Day ROI</label>
+                    <select id="roi">
+                        <option value="0.0020">0.20%</option>
+                        <option value="0.0035" selected>0.35%</option>
+                        <option value="0.0050">0.50%</option>
+                        <option value="0.0070">0.70%</option>
+                        <option value="0.0090">0.90%</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Loan Days</label>
+                    <input type="number" id="loanDays" value="30" min="7" max="90">
+                </div>
+            </div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Net Disbursed</div>
+                    <div id="netDisbursed" style="font-size: 1.5rem; font-weight: 700;">₹47,050</div>
+                </div>
+                <div class="result-card">
+                    <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Interest</div>
+                    <div id="interestAmount" style="font-size: 1.5rem; font-weight: 700;">₹2,625</div>
+                </div>
+                <div class="result-card total">
+                    <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Total Repayment</div>
+                    <div id="totalRepayment" style="font-size: 1.8rem; font-weight: 700;">₹50,000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apply Loan Section -->
+    <section id="apply" class="section">
+        <h2>Apply for Loan</h2>
+        <form id="loanForm" class="form-grid">
+            <div class="input-group">
+                <label>Full Name *</label>
+                <input type="text" id="fullName" required>
+            </div>
+            <div class="input-group">
+                <label>Mobile Number *</label>
+                <input type="tel" id="mobile" pattern="[0-9]{10}" required>
+            </div>
+            <div class="input-group">
+                <label>Email ID</label>
+                <input type="email" id="email">
+            </div>
+            <div class="input-group">
+                <label>PAN Number *</label>
+                <input type="text" id="pan" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" required>
+            </div>
+            <div class="input-group">
+                <label>Aadhaar Number</label>
+                <input type="text" id="aadhaar" pattern="[0-9]{12}" maxlength="12">
+            </div>
+            <div class="input-group">
+                <label>Monthly Salary (₹) *</label>
+                <input type="number" id="salary" min="15000" required>
+            </div>
+            <div class="input-group">
+                <label>Required Loan Amount (₹) *</label>
+                <input type="number" id="reqAmount" min="10000" max="500000" required>
+            </div>
+            <button type="submit" class="btn">Submit Application</button>
+            <button type="reset" class="btn btn-secondary">Reset Form</button>
+        </form>
+    </section>
+
+    <!-- Customers Section -->
+    <section id="customers" class="section" style="background: #f8f9fa;">
+        <h2>Happy Customers</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="badge">Happy Customer</div>
+                <h4>Kuldip Sharma</h4>
+                <p>"Fast loan approval, very helpful service. Got money in just 2 hours!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="badge">Happy Customer</div>
+                <h4>Balajee Reddy</h4>
+                <p>"Best loan service ever! Quick process and friendly staff."</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="badge">Happy Customer</div>
+                <h4>A. Ajithkumar</h4>
+                <p>"Reliable and transparent. Highly recommended for salary loans."</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="badge">Happy Customer</div>
+                <h4>Ravindhar Pai</h4>
+                <p>"Smooth experience from application to disbursement."</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="badge">Happy Customer</div>
+                <h4>Anthony Raj</h4>
+                <p>"Perfect solution for urgent financial needs. 5 stars!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="badge">Happy Customer</div>
+                <h4>Subham Singh</h4>
+                <p>"Very professional service. Will use again definitely."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+       
